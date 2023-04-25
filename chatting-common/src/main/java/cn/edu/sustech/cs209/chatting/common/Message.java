@@ -1,41 +1,42 @@
 package cn.edu.sustech.cs209.chatting.common;
 
 public class Message {
-    public static String[] usernames=new String[1000];
-    public static int numofuser=0;
-    private Long timestamp;
 
-    private String sentBy;
+  public static String[] usernames = new String[1000];
+  public static int numofuser = 0;
+  private Long timestamp;
 
-    private String sendTo;
+  private String sentBy;
 
-    private String data;
+  private String sendTo;
 
-    public Message(Long timestamp, String sentBy, String sendTo, String data) {
-        this.timestamp = timestamp;
-        this.sentBy = sentBy;
-        this.sendTo = sendTo;
-        this.data = data;
-    }
+  private String data;
 
-    public Long getTimestamp() {
-        return timestamp;
-    }
+  public Message(Long timestamp, String sentBy, String sendTo, String data) {
+    this.timestamp = timestamp;
+    this.sentBy = sentBy;
+    this.sendTo = sendTo;
+    this.data = data;
+  }
 
-    public String getSentBy() {
-        return sentBy;
-    }
+  public Long getTimestamp() {
+    return timestamp;
+  }
 
-    public String getSendTo() {
-        return sendTo;
-    }
+  public String getSentBy() {
+    return sentBy;
+  }
 
-    public String getData() {
-        return data;
-    }
+  public String getSendTo() {
+    return sendTo;
+  }
 
-    public void setSentBy(String s){
-        this.sentBy=s;
-    }
+  public String getData() {
+    return data;
+  }
+
+  public void setSentBy(String s) {
+    this.sentBy = s;
+  }
 }
 
