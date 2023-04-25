@@ -1,7 +1,8 @@
 package cn.edu.sustech.cs209.chatting.common;
 
 public class Message {
-
+    public static String[] usernames=new String[1000];
+    public static int numofuser=0;
     private Long timestamp;
 
     private String sentBy;
@@ -32,4 +33,9 @@ public class Message {
     public String getData() {
         return data;
     }
+
+    public void setSentBy(String s){
+        this.sentBy=s;
+    }
 }
+
