@@ -57,7 +57,7 @@ public class Controller implements Initializable {
   public Map<String, List<Message>> datas = new HashMap<>();
   Socket socket;
   String username;
-  public String[] names = new String[1];
+  public String[] names =null;
   int tot = 0;
 
   @Override
@@ -81,16 +81,10 @@ public class Controller implements Initializable {
                      if so, ask the user to change the username
              */
         username = input.get();
+
         os.write(("userName:" + username + '\n').getBytes());
-        Controller x = this;
         Thread readFromServer = new Thread(new ReadFromServerThread(socket, this));
         readFromServer.start();
-
-//            Platform.runLater(readFromServer);
-//            while((readlen=ins.read(buf))!=-1){
-//                names[++tot]=new String(buf,0,readlen);
-//                System.out.println(names[tot]);
-//            }
 
       } else {
         System.out.println("Invalid username " + input + ", exiting");
@@ -182,20 +176,8 @@ public class Controller implements Initializable {
       }
     });
 
-    // TODO: if the current user already chatted with the selected user, just open the chat with that user
-    // TODO: otherwise, create a new chat item in the left panel, the title should be the selected user's name
+
   }
-
-  /**
-   * A new dialog should contain a multi-select list, showing all user's name. You can select
-   * several users that will be joined in the group chat, including yourself.
-   * <p>
-   * The naming rule for group chats is similar to WeChat: If there are > 3 users: display the first
-   * three usernames, sorted in lexicographic order, then use ellipsis with the number of users, for
-   * example: UserA, UserB, UserC... (10) If there are <= 3 users: do not display the ellipsis, for
-   * example: UserA, UserB (2)
-   */
-
 
   @FXML
   public void GroupChat() throws IOException {
@@ -231,7 +213,6 @@ public class Controller implements Initializable {
 
     Button okBtn = new Button("OK");
     okBtn.setOnAction(e -> {
-//            user.set(userSel.getSelectionModel().getSelectedItem());
       stage.close();
     });
 
@@ -263,14 +244,12 @@ public class Controller implements Initializable {
   public void receivemsg(Message msg) {
     String clienther = msg.getSentBy();
     if (!datas.containsKey(clienther)) {
-      System.out.println("new grouo------------------");
       List<Message> xs11 = new ArrayList<>();
       datas.put(clienther, xs11);
       ObservableList<String> items = chatList.getItems();
       Platform.runLater(new Runnable() {
         @Override
         public void run() {
-          //更新JavaFX的主线程的代码放在此处
           items.add(clienther);
         }
       });
@@ -289,7 +268,6 @@ public class Controller implements Initializable {
     Platform.runLater(new Runnable() {
       @Override
       public void run() {
-        //更新JavaFX的主线程的代码放在此处
         chatContentList.setItems(itemsdata);
         chatContentList.getCellFactory().call(chatContentList);
       }
@@ -297,15 +275,8 @@ public class Controller implements Initializable {
 
   }
 
-  /**
-   * Sends the message to the <b>currently selected</b> chat.
-   * <p>
-   * Blank messages are not allowed. After sending the message, you should clear the text input
-   * field.
-   */
   @FXML
   public void doSendMessage() throws IOException {
-//      inputArea;
     System.out.println(inputArea.getText());
     if (currentclient.contains(".")) {
       System.out.println("send");
@@ -331,11 +302,6 @@ public class Controller implements Initializable {
 
   }
 
-  /**
-   * You may change the cell factory if you changed the design of {@code Message} model. Hint: you
-   * may also define a cell factory for the chats displayed in the left panel, or simply override
-   * the toString method.
-   */
   private class MessageCellFactory implements Callback<ListView<Message>, ListCell<Message>> {
 
     @Override
@@ -360,11 +326,6 @@ public class Controller implements Initializable {
             System.out.println("wwwwwwwwwwwwwwwwww");
 
             ss = msg.getSentBy().split("\\.");
-//                        nameLabel=new Label(ss[ss.length-1]);
-//                        System.out.println(msg.getSentBy());
-//                        System.out.println(ss.length);
-//                        System.out.println(ss[ss.length-2]);
-//                        System.out.println(ss[ss.length-1]);
             String[] hh = msg.getData().split("-");
             nameLabel.setText(hh[0]);
             msgLabel.setText(hh[1]);
